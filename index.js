@@ -3,7 +3,9 @@ require('dotenv').config();
 const { Client, GatewayDispatchEvents } = require("discord.js");
 const { Riffy } = require("riffy");
 const { nodes } = require("./lavalink-hosts.json");
- 
+
+const prefix = process.env.PREFIX;
+
 const client = new Client({
     intents: [
         "Guilds",
@@ -30,7 +32,7 @@ client.on("ready", () => {
 });
  
 client.on("messageCreate", async (message) => {
-    if (!message.content.startsWith('!') || message.author.bot) return;
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
  
     const args = message.content.slice(1).trim().split(" ");
     const command = args.shift().toLowerCase();
