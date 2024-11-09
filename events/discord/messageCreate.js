@@ -5,8 +5,9 @@ module.exports = {
     execute: async (message, client) => {
         if (!message.content.startsWith(client.prefix) || message.author.bot) return;
 
-        const args = message.content.slice(1).trim().split(" ");
-        const commandCalled = args.shift().toLowerCase();
+        const args = message.content.split(' ');
+        
+        const commandCalled = args.shift().substring(client.config.prefix.length);
         let command = client.commands.get(commandCalled.toLowerCase());
 
         if (!command)
