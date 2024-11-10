@@ -13,6 +13,7 @@ module.exports = {
 
         const player = client.riffy.players.get(message.guild.id);
         const track = player.current;
+        console.log(player);
 
         const channel = client.channels.cache.get(player.textChannel);
 
@@ -28,18 +29,23 @@ module.exports = {
         const minutes = parseInt(minutesStr, 10);
         const seconds = parseInt(secondsStr, 10);
 
+        const timePlayed = player.position;
+        const formattedTimePlayed = formatTime(Math.round(timePlayed / 1000));
+
+        const progress = (timePlayed / musicLength) * 100;
+
         
         const musicard = await Classic({
             thumbnailImage: track.info.thumbnail,
             backgroundColor: "#2B2D31",
-            progress: 0,
+            progress,
             progressColor: client.config.accentColor,
             progressBarColor: '#1F2022',
             name: track.info.title,
             nameColor: client.config.accentColor,
             author: track.info.author,
             authorColor: '#9E9E9E',
-            startTime: '0:00',
+            startTime: formattedTimePlayed,
             endTime: formattedLength,
             timeColor: '#9E9E9E',
         });
