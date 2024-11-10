@@ -10,6 +10,7 @@ module.exports = {
 	async execute(client, queue, message, content) {
 		const player = client.riffy.players.get(message.guild.id);
 
+        player.destroy();
         player.disconnect();
 
 		return { title: client.emotes.success + " Adiós" }

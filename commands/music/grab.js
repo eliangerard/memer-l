@@ -11,12 +11,14 @@ module.exports = {
 
         const player = client.riffy.players.get(message.guild.id);
 
+        console.log(player.current);
+
         if(message.author){
-            message.author.send(player.current.uri);
+            message.author.send(player.current.info.uri);
             return { title : "Tulún" };
         }
         if(message.user){
-            message.user.send(player.current.uri);
+            message.user.send(player.current.info.uri);
             return { title : "Tulún" };
         }
     }
