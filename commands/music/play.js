@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+const { io } = require('../../events/socket');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -31,6 +32,10 @@ module.exports = {
                 player.queue.add(track);
             }
 
+            if (player.current)
+                io.emit('queueUpdate', [player.current.info, ...player.queue.map(track => track.info)]);
+            else
+                io.emit('queueUpdate', player.queue.map(track => track.info));
             if (!player.playing && !player.paused) player.play();
             return {
                 content: `Se añadieron \`${tracks.length} canciones\` desde \`${playlistInfo.name}\``,
@@ -41,6 +46,10 @@ module.exports = {
             track.info.requester = message.author;
 
             player.queue.add(track);
+            if (player.current)
+                io.emit('queueUpdate', [player.current.info, ...player.queue.map(track => track.info)]);
+            else
+                io.emit('queueUpdate', player.queue.map(track => track.info));
             if (!player.playing && !player.paused) player.play();
             console.log(track);
             return {

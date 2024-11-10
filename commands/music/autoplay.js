@@ -13,6 +13,7 @@ module.exports = {
 
         return {
             title: "AutoPlay " + (client.autoPlay ? "activado" : "desactivado"),
+            result: client.autoPlay,
         };
     }
 };
